@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Siapa Menggerakkan Siapa? Keterkaitan Antarsektor Ekonomi Indonesia</title>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap");
+:root{
+  --bg:#F8FAFC; --card:#FFFFFF; --ink:#0F172A; --mut:#64748B; --line:#E2E8F0;
+  --primary:#2563EB; --navy:#1E3A8A; --teal:#0F766E; --indigo:#6366F1;
+  --warn:#F59E0B; --err:#DC2626; --primary-soft:#EFF6FF;
+  --shadow:0 1px 2px rgba(15,23,42,.04),0 6px 20px rgba(15,23,42,.05);
+  --r:14px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font:15px/1.6 "Segoe UI",system-ui,-apple-system,Roboto,sans-serif;color:var(--ink);background:var(--bg)}
+[hidden]{display:none!important}
+a{color:inherit;text-decoration:none}
+img,svg,canvas{display:block;max-width:100%}
+button,select,input{font:inherit}
+:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+.page-shell{max-width:1280px;margin:0 auto;padding:0 20px 32px}
+
+/* Header */
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px 0 12px}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}
+.brand-mark{flex:none;width:40px;height:40px;border-radius:10px;background:var(--navy);display:grid;place-items:center;color:#fff;font-weight:700;font-size:.9rem}
+.brand small{display:block;color:var(--mut);font-size:.78rem;line-height:1.2}
+.brand h1{margin:2px 0 0;font-size:1.15rem;line-height:1.25;color:var(--ink)}
+.meta{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px 8px}
+.chip{padding:4px 10px;border-radius:999px;background:var(--card);border:1px solid var(--line);color:var(--mut);font-size:.78rem;font-weight:600}
+
+/* Navigasi */
+.tabs-wrap{position:sticky;top:0;z-index:20;background:rgba(248,250,252,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);margin:0 -20px;padding:0 20px}
+.tabs{display:flex;gap:4px;max-width:1280px;margin:0 auto;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{flex:none;display:inline-flex;align-items:center;gap:8px;border:0;border-bottom:3px solid transparent;background:none;padding:12px 14px 10px;cursor:pointer;color:var(--mut);font-weight:600;white-space:nowrap;transition:color .15s,border-color .15s}
+.tabs button:hover{color:var(--ink)}
+.tabs button.on{color:var(--primary);border-bottom-color:var(--primary)}
+svg.ico{width:18px;height:18px;flex:none;background:none;border:0;border-radius:0;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+main{padding-top:24px}
+.panel-section{animation:pagein .25s ease}
+@keyframes pagein{from{opacity:0}to{opacity:1}}
+
+/* Hero */
+.hero{border-radius:18px;padding:44px 40px;color:#fff;background:linear-gradient(135deg,var(--navy) 0%,var(--primary) 100%);box-shadow:var(--shadow)}
+.hero h2{margin:0;font-size:clamp(1.9rem,4.4vw,3.1rem);line-height:1.1;letter-spacing:.01em;text-transform:uppercase;max-width:16ch}
+.hero .sub{margin:14px 0 0;font-size:1.15rem;font-weight:600;color:#DBEAFE}
+.hero p.desc{margin:14px 0 0;max-width:62ch;color:#E0ECFF;font-size:1.02rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);font-weight:700;cursor:pointer;transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
+.btn.cta{margin-top:24px;background:#fff;color:var(--navy);border-color:transparent}
+
+/* Stat */
+.stat-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:20px}
+.stat-card{padding:18px;border:1px solid var(--line);border-radius:var(--r);background:var(--card);box-shadow:var(--shadow)}
+.stat-card .value{font-size:2rem;font-weight:800;line-height:1;color:var(--navy);font-variant-numeric:tabular-nums}
+.stat-card .label{margin-top:8px;color:var(--mut);font-size:.85rem;line-height:1.4}
+
+.sec-title{margin:36px 0 14px;font-size:1.25rem;line-height:1.3}
+.sec-title small{display:block;margin-top:2px;color:var(--mut);font-size:.9rem;font-weight:400}
+
+/* Kartu navigasi Beranda */
+.nav-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.nav-card{display:flex;flex-direction:column;text-align:left;padding:22px;border:1px solid var(--line);border-radius:var(--r);background:var(--card);box-shadow:var(--shadow);cursor:pointer;color:inherit;transition:border-color .15s,transform .15s}
+.nav-card:hover{border-color:var(--primary);transform:translateY(-2px)}
+.nav-card .no{font-size:.82rem;font-weight:700;color:var(--primary)}
+.nav-card h3{margin:6px 0 8px;font-size:1.15rem;line-height:1.3}
+.nav-card p{margin:0 0 18px;color:var(--mut);font-size:.92rem;flex:1}
+.nav-card .go{font-weight:700;color:var(--primary)}
+.nav-card.t2 .no,.nav-card.t2 .go{color:var(--teal)}
+.nav-card.t3 .no,.nav-card.t3 .go{color:var(--indigo)}
+
+/* Alur baca */
+.flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:12px;align-items:stretch}
+.flow-step{padding:18px;border:1px solid var(--line);border-radius:var(--r);background:var(--card)}
+.flow-step b{display:block;font-size:1.02rem}
+.flow-step span{display:block;margin-top:4px;color:var(--mut);font-size:.9rem}
+.flow-arrow{align-self:center;color:var(--mut);font-size:1.4rem}
+.flow-cap{margin:12px 0 0;color:var(--mut);font-size:.9rem}
+
+.source-card{margin-top:24px;padding:18px 20px;border:1px solid var(--line);border-left:4px solid var(--teal);border-radius:var(--r);background:var(--card)}
+.card-label{margin:0 0 6px;font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
+.source-card p{margin:0}
+
+/* Page head */
+.page-head{margin:0 0 18px}
+.page-head .kicker{margin:0;font-size:.85rem;font-weight:700;color:var(--primary)}
+.page-head h2{margin:2px 0 8px;font-size:clamp(1.5rem,3vw,2rem);line-height:1.2}
+.page-head p.lead{margin:0;max-width:75ch;color:var(--mut)}
+.progress{display:flex;gap:6px;margin:14px 0 0;max-width:260px}
+.progress i{flex:1;height:4px;border-radius:2px;background:var(--line)}
+.progress i.f{background:var(--primary)}
+.progress-cap{margin:6px 0 0;font-size:.78rem;color:var(--mut)}
+
+/* Filter */
+.ctl{display:flex;flex-wrap:wrap;gap:14px 24px;align-items:center;margin:0}
+.ctl label{display:flex;align-items:center;gap:10px;color:var(--ink);font-weight:600}
+.ctl select{padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink)}
+.ctl input[type=range]{accent-color:var(--primary);width:200px}
+.ctl b{color:var(--primary)}
+.filter-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:16px 18px;margin:0 0 18px}
+
+/* Viz card */
+.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;align-items:start}
+.stack{display:grid;gap:18px;margin-top:18px}
+.viz-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:20px;min-width:0}
+.viz-card h3{margin:0;font-size:1.05rem}
+.viz-card .desc{margin:4px 0 14px;color:var(--mut);font-size:.88rem}
+.viz-card svg{width:100%;height:auto;display:block;background:#fff;border-radius:10px;border:1px solid var(--line)}
+canvas{width:100%;max-width:560px;height:auto;display:block;margin:auto;border:1px solid var(--line);border-radius:10px;background:#fff}
+.lg{display:flex;flex-wrap:wrap;gap:8px 14px;font-size:.82rem;color:var(--mut);margin-top:14px}
+.lg i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.grad{height:10px;width:220px;max-width:100%;border-radius:2px;display:inline-block;vertical-align:middle;margin:0 6px}
+.hint{color:var(--mut);margin:0 0 12px;line-height:1.6;font-size:.9rem}
+.src{font-size:.78rem;color:var(--mut);margin:12px 0 0;padding-top:10px;border-top:1px solid var(--line)}
+.bc{display:flex;flex-wrap:wrap;gap:6px;margin:0}
+.bc button{border:1px solid var(--line);background:var(--card);border-radius:8px;padding:6px 12px;cursor:pointer;color:var(--ink);font-weight:600}
+.bc button:hover{border-color:var(--primary);color:var(--primary)}
+.bc button+button::before{content:"› ";color:var(--mut);padding-right:6px}
+.insight{margin-top:18px;padding:16px 18px;border:1px dashed var(--line);border-radius:var(--r);background:var(--primary-soft)}
+.insight p{margin:0;color:var(--mut);font-size:.9rem}
+
+.next-row{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:28px;padding-top:18px;border-top:1px solid var(--line)}
+
+/* Tooltip: struktur sama, hanya gaya */
+#tip{position:absolute;display:none;background:#fff;border:1px solid var(--line);border-left:4px solid var(--primary);border-radius:10px;padding:10px 12px;font-size:.8rem;line-height:1.55;pointer-events:none;box-shadow:0 12px 28px rgba(15,23,42,.14);max-width:260px;z-index:999;color:var(--ink)}
+#tip b:first-child{display:block;padding-bottom:6px;margin-bottom:6px;border-bottom:1px solid var(--line)}
+#tip b{color:var(--ink)}
+.err{background:#FEF2F2;padding:12px 16px;border:1px solid #FECACA;color:#991B1B;border-radius:10px;margin:16px 0}
+.err code{background:#fff;padding:1px 6px;border-radius:4px}
+footer{margin-top:32px;padding:16px 0 0;border-top:1px solid var(--line);color:var(--mut);font-size:.84rem;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.back-to-top{position:fixed;right:20px;bottom:22px;padding:9px 14px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.95);color:var(--ink);font-weight:700;box-shadow:var(--shadow);display:none;z-index:30;cursor:pointer}
+.back-to-top.visible{display:inline-flex}
+text{font-family:inherit}
+
+@media(max-width:1100px){.row{grid-template-columns:1fr}}
+@media(max-width:860px){
+  .stat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .nav-grid{grid-template-columns:1fr}
+  .flow{grid-template-columns:1fr}
+  .flow-arrow{transform:rotate(90deg);justify-self:center}
+}
+@media(max-width:640px){
+  .page-shell{padding:0 14px 26px}
+  .tabs-wrap{margin:0 -14px;padding:0 14px}
+  .topbar{flex-direction:column;align-items:flex-start;gap:10px}
+  .meta{justify-content:flex-start}
+  .hero{padding:28px 20px}
+  .ctl{flex-direction:column;align-items:stretch}
+  .ctl label{width:100%;justify-content:space-between}
+  .ctl input[type=range]{width:100%}
+  .viz-card{padding:14px}
+  .next-row .btn{width:100%}
+}
+@media(prefers-reduced-motion:reduce){.panel-section{animation:none}html{scroll-behavior:auto}.btn,.nav-card{transition:none}}
+
+/* ===== Premium presentation layer — additive; visualisation logic remains untouched ===== */
+:root{
+  --bg:#F5F7FB; --card:#FFFFFF; --ink:#10213D; --mut:#60708A; --line:#DFE6F0;
+  --primary:#2457D6; --navy:#102A67; --teal:#0D9488; --indigo:#6D5CE7;
+  --warn:#F59E0B; --primary-soft:#EEF4FF;
+  --shadow-sm:0 1px 2px rgba(16,42,103,.04),0 4px 12px rgba(16,42,103,.04);
+  --shadow:0 12px 34px rgba(16,42,103,.08);
+  --shadow-lg:0 24px 70px rgba(16,42,103,.14);
+  --r:18px;
+}
+body{
+  font-family:"DM Sans",system-ui,-apple-system,sans-serif;
+  background:
+    radial-gradient(circle at 8% 0%,rgba(36,87,214,.07),transparent 27rem),
+    radial-gradient(circle at 92% 22%,rgba(13,148,136,.055),transparent 24rem),
+    var(--bg);
+  letter-spacing:-.008em;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.55;
+  background-image:linear-gradient(rgba(16,42,103,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(16,42,103,.025) 1px,transparent 1px);
+  background-size:32px 32px;mask-image:linear-gradient(to bottom,#000,transparent 70%);
+}
+.page-shell{max-width:1380px;padding:0 28px 42px}
+.topbar{padding:18px 2px 14px}
+.brand-mark{
+  width:46px;height:46px;border-radius:14px;
+  background:linear-gradient(145deg,var(--navy),var(--primary));
+  box-shadow:0 9px 22px rgba(36,87,214,.22);letter-spacing:.03em;
+}
+.brand small{color:var(--primary);font-size:.7rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase}
+.brand h1{font-family:"Manrope",sans-serif;font-size:1.08rem;letter-spacing:-.03em}
+.chip{padding:6px 11px;background:rgba(255,255,255,.72);box-shadow:var(--shadow-sm);backdrop-filter:blur(8px)}
+.tabs-wrap{
+  top:0;margin:0 -28px;padding:8px 28px;background:rgba(245,247,251,.82);
+  border-block:1px solid rgba(223,230,240,.82);backdrop-filter:blur(18px) saturate(1.35);
+}
+.tabs{gap:7px}
+.tabs button{
+  position:relative;border:1px solid transparent;border-radius:11px;padding:9px 14px;
+  transition:color .2s ease,background .2s ease,border-color .2s ease,transform .2s ease;
+}
+.tabs button::after{
+  content:"";position:absolute;left:16px;right:16px;bottom:4px;height:2px;border-radius:2px;
+  background:currentColor;transform:scaleX(0);transition:transform .2s ease;
+}
+.tabs button:hover{color:var(--navy);background:rgba(255,255,255,.7);transform:translateY(-1px)}
+.tabs button.on{color:var(--primary);border-color:#D9E4FF;background:#fff;box-shadow:var(--shadow-sm)}
+.tabs button.on::after{transform:scaleX(1)}
+main{padding-top:30px}
+.panel-section{animation:pagein .42s cubic-bezier(.2,.8,.2,1)}
+@keyframes pagein{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+
+.hero{
+  isolation:isolate;position:relative;overflow:hidden;min-height:410px;padding:64px 58px;
+  display:flex;flex-direction:column;justify-content:center;
+  border:1px solid rgba(255,255,255,.14);border-radius:28px;
+  background:
+    radial-gradient(circle at 83% 38%,rgba(77,217,207,.24),transparent 13rem),
+    radial-gradient(circle at 72% 90%,rgba(109,92,231,.36),transparent 18rem),
+    linear-gradient(125deg,#0B2054 0%,#173E9D 55%,#2457D6 100%);
+  box-shadow:var(--shadow-lg);
+}
+.hero::before,.hero::after{content:"";position:absolute;z-index:-1;border:1px solid rgba(255,255,255,.15);border-radius:50%}
+.hero::before{width:420px;height:420px;right:-40px;top:-90px;box-shadow:0 0 0 56px rgba(255,255,255,.025),0 0 0 112px rgba(255,255,255,.018)}
+.hero::after{width:10px;height:10px;right:27%;top:27%;background:#6EE7DA;border:0;box-shadow:66px 108px 0 #B7AFFF,-55px 172px 0 #F9BC55,-134px 66px 0 rgba(255,255,255,.8)}
+.hero-kicker{display:flex;align-items:center;gap:9px;margin-bottom:20px;color:#BFD1FF;font-size:.72rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
+.hero-kicker::before{content:"";width:24px;height:2px;border-radius:4px;background:#6EE7DA}
+.hero h2{font-family:"Manrope",sans-serif;font-size:clamp(2.45rem,5.5vw,4.7rem);letter-spacing:-.055em;text-transform:none;max-width:11ch}
+.hero .sub{margin-top:18px;color:#DCE7FF;font-size:clamp(1.05rem,2vw,1.3rem)}
+.hero p.desc{max-width:58ch;color:#C5D5F8}
+.btn{min-height:44px;border-radius:12px;transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease,background .2s ease}
+.btn:hover{transform:translateY(-2px);border-color:#C8D7F8;box-shadow:0 10px 24px rgba(16,42,103,.12)}
+.btn.cta{align-self:flex-start;margin-top:28px;padding-inline:22px;box-shadow:0 12px 28px rgba(5,18,52,.22)}
+.btn.cta:hover{box-shadow:0 16px 34px rgba(5,18,52,.3)}
+
+.stat-grid{gap:16px;margin-top:22px}
+.stat-card{
+  position:relative;overflow:hidden;padding:23px 22px 21px;border-color:rgba(223,230,240,.86);
+  box-shadow:var(--shadow-sm);transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease;
+}
+.stat-card::before{
+  content:"";display:block;width:32px;height:4px;margin-bottom:18px;border-radius:5px;
+  background:linear-gradient(90deg,var(--primary),#55BDEB);
+}
+.stat-card:nth-child(2)::before{background:linear-gradient(90deg,var(--teal),#66D5CB)}
+.stat-card:nth-child(3)::before{background:linear-gradient(90deg,var(--indigo),#B0A7FF)}
+.stat-card:nth-child(4)::before{background:linear-gradient(90deg,var(--warn),#FFD080)}
+.stat-card::after{content:"";position:absolute;width:90px;height:90px;right:-38px;top:-38px;border-radius:50%;background:var(--primary-soft)}
+.stat-card:hover{transform:translateY(-4px);border-color:#CAD8F0;box-shadow:var(--shadow)}
+.stat-card .value{font-family:"Manrope",sans-serif;font-size:2.35rem;letter-spacing:-.05em}
+.stat-card .label{font-weight:600}
+
+.sec-title,.page-head h2,.viz-card h3,.nav-card h3{font-family:"Manrope",sans-serif;letter-spacing:-.035em}
+.sec-title{margin-top:46px;font-size:1.45rem}
+.sec-title small{font-family:"DM Sans",sans-serif;font-weight:400;letter-spacing:0}
+.nav-grid{gap:18px}
+.nav-card{
+  position:relative;min-height:270px;padding:26px;border-color:rgba(223,230,240,.9);border-top:4px solid var(--primary);
+  box-shadow:var(--shadow-sm);transition:transform .24s ease,box-shadow .24s ease,border-color .24s ease;
+}
+.nav-card::after{content:"↗";position:absolute;right:24px;top:21px;color:#9BB1DE;font-size:1.25rem;transition:transform .2s ease,color .2s ease}
+.nav-card:hover{transform:translateY(-6px);box-shadow:var(--shadow);border-color:#BACDF3}
+.nav-card:hover::after{color:var(--primary);transform:translate(2px,-2px)}
+.nav-card.t2{border-top-color:var(--teal)}.nav-card.t3{border-top-color:var(--indigo)}
+.nav-card h3{max-width:14ch;font-size:1.35rem}
+.nav-card .no{letter-spacing:.1em;font-size:.72rem}.nav-card .go{margin-top:auto}
+.flow{padding:10px;border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.66);box-shadow:var(--shadow-sm)}
+.flow-step{border:0;background:transparent}.flow-step b{color:var(--navy)}
+.source-card{border-radius:18px;border-color:#D9E5F6;background:linear-gradient(120deg,#fff,#F5F9FF);box-shadow:var(--shadow-sm)}
+
+.page-head{
+  position:relative;overflow:hidden;margin-bottom:22px;padding:28px 30px;border:1px solid var(--line);
+  border-radius:22px;background:linear-gradient(120deg,#fff 60%,#F0F5FF);box-shadow:var(--shadow-sm);
+}
+.page-head::after{content:"";position:absolute;right:-55px;top:-65px;width:180px;height:180px;border:32px solid rgba(36,87,214,.055);border-radius:50%}
+.page-head .kicker{display:inline-flex;padding:5px 10px;border-radius:999px;background:var(--primary-soft);color:var(--primary);font-size:.7rem;letter-spacing:.12em}
+.page-head h2{font-size:clamp(1.8rem,3vw,2.6rem);color:var(--navy)}
+.page-head .lead{max-width:80ch}
+.filter-card{padding:20px 22px;border-radius:18px;box-shadow:var(--shadow-sm);border-color:#D8E2F0}
+.card-label{color:var(--navy);letter-spacing:.12em}
+.ctl{gap:12px}
+.ctl label{min-height:44px;padding:9px 12px;border:1px solid var(--line);border-radius:11px;background:#F8FAFD}
+.ctl select{min-height:34px;border-radius:8px;border-color:#D3DCE9;background-color:#fff;cursor:pointer}
+.ctl input[type=range]{accent-color:var(--primary);cursor:pointer}
+.lg i{box-shadow:0 0 0 3px #fff,0 0 0 4px var(--line)}
+.row,.stack{gap:20px}
+.viz-card{padding:22px;border-color:#DAE3EF;box-shadow:var(--shadow-sm);transition:border-color .22s ease,box-shadow .22s ease}
+.viz-card:hover{border-color:#C6D5EB;box-shadow:var(--shadow)}
+.viz-card h3{font-size:1.12rem;color:var(--navy)}
+.viz-card svg,canvas{border-color:#E5EBF3;border-radius:13px;background:linear-gradient(180deg,#fff,#FCFDFF)}
+.viz-card svg{animation:chartReveal .5s .08s ease both}
+@keyframes chartReveal{from{opacity:0;transform:scale(.995)}to{opacity:1;transform:none}}
+.bc button{min-height:36px;border-radius:10px;transition:color .18s,border-color .18s,background .18s}
+.bc button:hover{background:var(--primary-soft)}
+.insight{border-style:solid;border-color:#D8E4FA;border-left:4px solid var(--primary);background:linear-gradient(110deg,#F1F6FF,#FAFCFF)}
+.next-row{margin-top:32px}
+#tip{
+  padding:12px 14px;border:0;border-left:4px solid var(--primary);border-radius:12px;
+  box-shadow:0 18px 44px rgba(8,28,70,.2);backdrop-filter:blur(8px);
+  animation:tipIn .12s ease-out;
+}
+@keyframes tipIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+footer{margin-top:42px;padding:20px 2px;color:#71809A}
+.back-to-top{border-color:#D6E0EE;box-shadow:0 10px 28px rgba(16,42,103,.13);transition:transform .2s,box-shadow .2s}
+.back-to-top:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(16,42,103,.18)}
+
+@media(max-width:860px){
+  .page-shell{padding-inline:18px}.tabs-wrap{margin-inline:-18px;padding-inline:18px}
+  .hero{min-height:390px;padding:48px 34px}.hero::before{right:-180px}
+  .nav-card{min-height:230px}.page-head{padding:24px}
+}
+@media(max-width:640px){
+  .page-shell{padding:0 13px 28px}.tabs-wrap{margin-inline:-13px;padding:7px 13px}
+  .meta .chip:first-child{width:100%}
+  .tabs{gap:4px}.tabs button{padding:9px 11px}.tabs button .ico{width:16px}
+  .hero{min-height:470px;padding:36px 23px;border-radius:22px}
+  .hero h2{font-size:2.65rem}.hero .sub{max-width:22ch}
+  .stat-grid{gap:10px}.stat-card{padding:18px 15px}.stat-card .value{font-size:1.8rem}
+  .page-head{padding:21px 18px}.page-head h2{font-size:1.75rem}
+  .filter-card{padding:17px}.ctl label{align-items:flex-start}
+  .viz-card{padding:15px;border-radius:15px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+</style>
+</head>
+<body>
+<div class="page-shell">
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">I/O</div>
+      <div>
+        <small>Visualisasi Data &amp; Informasi</small>
+        <h1>Ekonomi dalam Jaringan</h1>
+      </div>
+    </div>
+    <div class="meta">
+      <span class="chip">M. Arkillah Ibnu Asshiddiqie</span>
+      <span class="chip">3SD2</span>
+      <span class="chip">222313191</span>
+    </div>
+  </header>
+
+  <div class="tabs-wrap">
+    <nav class="tabs" aria-label="Navigasi utama">
+      <button data-t="overview" class="on" type="button" aria-current="page"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg><span>Beranda</span></button>
+      <button data-t="net" type="button"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="8" r="2.5"/><circle cx="9" cy="18" r="2.5"/><path d="M8 7l8 1M7 8l2 8M17 10l-6 7"/></svg><span>01 — Jaringan</span></button>
+      <button data-t="hie" type="button"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="5" rx="1"/><rect x="3" y="16" width="6" height="5" rx="1"/><rect x="15" y="16" width="6" height="5" rx="1"/><path d="M12 8v4M6 16v-4h12v4"/></svg><span>02 — Hierarki</span></button>
+      <button data-t="flo" type="button"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h10a4 4 0 014 4v6"/><path d="M13 14l4 4 4-4"/><path d="M3 17h5"/></svg><span>03 — Aliran</span></button>
+    </nav>
+  </div>
+
+<main>
+<!-- ===== BERANDA ===== -->
+<section id="overview" class="panel-section">
+  <div class="hero">
+    <div class="hero-kicker">Data Story · Ekonomi Indonesia 2020</div>
+    <h2>Siapa menggerakkan siapa?</h2>
+    <p class="sub">Peta Keterkaitan Antarsektor Ekonomi Indonesia</p>
+    <p class="desc">Dashboard interaktif ini mengeksplorasi keterkaitan antarsektor ekonomi Indonesia berdasarkan Tabel Input-Output BPS 2020 melalui tiga perspektif utama: jaringan, hierarki, dan aliran.</p>
+    <button class="btn cta" type="button" data-go="net">Mulai Eksplorasi →</button>
+  </div>
+
+  <div class="stat-grid">
+    <div class="stat-card"><div class="value">185</div><div class="label">Produk / sektor</div></div>
+    <div class="stat-card"><div class="value">17</div><div class="label">Kategori lapangan usaha</div></div>
+    <div class="stat-card"><div class="value">3</div><div class="label">Perspektif visualisasi</div></div>
+    <div class="stat-card"><div class="value">2020</div><div class="label">Tahun data</div></div>
+  </div>
+
+  <h2 class="sec-title">Apa yang ingin kita lihat?<small>Pilih satu pertanyaan sebagai titik awal.</small></h2>
+  <div class="nav-grid">
+    <button class="nav-card" type="button" data-go="net">
+      <span class="no">01 — Jaringan</span>
+      <h3>Siapa terhubung dengan siapa?</h3>
+      <p>Mengeksplorasi hubungan antarsektor dan mengidentifikasi sektor yang memiliki posisi penting dalam jaringan ekonomi.</p>
+      <span class="go">Eksplorasi Jaringan →</span>
+    </button>
+    <button class="nav-card t2" type="button" data-go="hie">
+      <span class="no">02 — Hierarki</span>
+      <h3>Sektor mana yang paling dominan?</h3>
+      <p>Melihat struktur sektor dan kategori ekonomi serta posisi relatif sektor berdasarkan indikator yang digunakan.</p>
+      <span class="go">Eksplorasi Hierarki →</span>
+    </button>
+    <button class="nav-card t3" type="button" data-go="flo">
+      <span class="no">03 — Aliran</span>
+      <h3>Ke mana transaksi ekonomi bergerak?</h3>
+      <p>Mengeksplorasi arah dan besarnya aliran transaksi antarkategori lapangan usaha.</p>
+      <span class="go">Eksplorasi Aliran →</span>
+    </button>
+  </div>
+
+  <h2 class="sec-title">Cara membaca dashboard<small>Keterhubungan → Struktur → Pergerakan</small></h2>
+  <div class="flow">
+    <div class="flow-step"><b>Jaringan</b><span>Memahami hubungan antarsektor.</span></div>
+    <div class="flow-arrow" aria-hidden="true">→</div>
+    <div class="flow-step"><b>Hierarki</b><span>Memahami struktur dan dominasi sektor.</span></div>
+    <div class="flow-arrow" aria-hidden="true">→</div>
+    <div class="flow-step"><b>Aliran</b><span>Memahami arah transaksi ekonomi.</span></div>
+  </div>
+
+  <div class="source-card">
+    <p class="card-label">Sumber data</p>
+    <p>Badan Pusat Statistik (BPS) — Tabel Input-Output Indonesia 2020</p>
+  </div>
+</section>
+
+<!-- ===== JARINGAN ===== -->
+<section id="net" class="panel-section" hidden>
+  <div class="page-head">
+    <p class="kicker">01 — Jaringan</p>
+    <h2>Siapa terhubung dengan siapa?</h2>
+    <p class="lead">Setiap titik adalah satu produk/sektor; garis menunjukkan penjualan antara satu sektor ke sektor lain. Arahkan kursor (atau ketuk) pada titik untuk menyorot tetangganya.</p>
+  </div>
+  <div class="filter-card">
+    <p class="card-label">Filter visualisasi</p>
+    <div class="ctl">
+      <label>Ukuran titik:
+      <select id="metric"><option value="strength_total">Total transaksi (strength)</option><option value="betweenness">Penghubung (betweenness)</option></select></label>
+      <label>Ambang bobot edge, persentil ≥ <b id="pv">95</b>
+      <input id="pct" type="range" min="80" max="99.9" step="0.1" value="95"></label>
+      <span><b id="ne"></b> edge tampil</span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="viz-card">
+      <h3>Graf force-directed</h3>
+      <p class="desc">Warna titik = komunitas; ukuran titik mengikuti metrik yang dipilih.</p>
+      <svg id="g" role="img" aria-label="Graf jaringan antarsektor"></svg>
+      <div class="lg" id="lgn"></div>
+      <p class="src"></p>
+    </div>
+    <div class="viz-card">
+      <h3>Matriks adjasensi</h3>
+      <p class="desc">Baris = sektor penjual, kolom = sektor pembeli.</p>
+      <canvas id="mx" role="img" aria-label="Matriks adjasensi 185 x 185"></canvas>
+      <p class="hint" style="margin-top:14px">Urutan dan penanda tepi mengikuti komunitas. Warna sel = nilai transaksi (skala log, gelap = kecil, terang = besar).</p>
+      <p class="src"></p>
+    </div>
+  </div>
+  <div class="insight"><p class="card-label">Insight</p><p>Insight dapat ditambahkan berdasarkan hasil analisis aktual.</p></div>
+  <div class="next-row">
+    <button class="btn" type="button" data-go="overview">← Beranda</button>
+    <button class="btn" type="button" data-go="hie">Lanjut ke 02 — Hierarki →</button>
+  </div>
+</section>
+
+<!-- ===== HIERARKI ===== -->
+<section id="hie" class="panel-section" hidden>
+  <div class="page-head">
+    <p class="kicker">02 — Hierarki</p>
+    <h2>Sektor mana yang paling dominan?</h2>
+    <p class="lead">Luas = total output domestik; warna = indeks keterkaitan ke belakang (BL). Klik kotak atau potongan untuk menelusuri ke bawah, gunakan penunjuk posisi untuk kembali.</p>
+  </div>
+  <div class="filter-card">
+    <p class="card-label">Posisi dalam hierarki</p>
+    <div class="bc" id="bc"></div>
+    <div class="lg"><span>BL rendah<span class="grad" id="gr"></span>BL tinggi <span id="gv"></span></span></div>
+  </div>
+  <div class="row">
+    <div class="viz-card"><h3>Treemap</h3><p class="desc">Luas kotak = total output.</p><svg id="tm" role="img" aria-label="Treemap"></svg></div>
+    <div class="viz-card"><h3>Sunburst</h3><p class="desc">Klik potongan untuk turun; klik pusat untuk naik.</p><svg id="sb" role="img" aria-label="Sunburst"></svg></div>
+  </div>
+  <p class="src"></p>
+  <div class="insight"><p class="card-label">Insight</p><p>Insight dapat ditambahkan berdasarkan hasil analisis aktual.</p></div>
+  <div class="next-row">
+    <button class="btn" type="button" data-go="net">← 01 — Jaringan</button>
+    <button class="btn" type="button" data-go="flo">Lanjut ke 03 — Aliran →</button>
+  </div>
+</section>
+
+<!-- ===== ALIRAN ===== -->
+<section id="flo" class="panel-section" hidden>
+  <div class="page-head">
+    <p class="kicker">03 — Aliran</p>
+    <h2>Ke mana transaksi ekonomi bergerak?</h2>
+    <p class="lead">Aliran penjualan antar 17 kategori lapangan usaha (transaksi di dalam kategori yang sama tidak ditampilkan). Ketebalan = nilai aliran; warna = kelompok kategori asal.</p>
+  </div>
+  <div class="filter-card">
+    <p class="card-label">Filter aliran transaksi</p>
+    <div class="ctl">
+      <label>Asal <select id="fa"></select></label>
+      <label>Tujuan <select id="ft"></select></label>
+      <label>Aliran terbesar: <b id="fnv">60</b><input id="fn" type="range" min="10" max="267" step="1" value="60"></label>
+    </div>
+    <div class="lg"><span><i style="background:#009E73"></i>Primer</span><span><i style="background:#E69F00"></i>Sekunder</span><span><i style="background:#0072B2"></i>Tersier</span></div>
+  </div>
+  <div class="stack">
+    <div class="viz-card"><h3>Diagram Sankey (asal → tujuan)</h3><p class="desc">Ketebalan pita = nilai aliran antarkategori.</p><svg id="sk" role="img" aria-label="Diagram Sankey"></svg><p class="src"></p></div>
+    <div class="viz-card"><h3>Diagram chord</h3><p class="desc">Pita berarah dari kategori penjual ke kategori pembeli.</p><svg id="ch" style="max-width:560px;margin:auto" role="img" aria-label="Diagram chord"></svg><p class="src"></p></div>
+  </div>
+  <div class="insight"><p class="card-label">Insight</p><p>Insight dapat ditambahkan berdasarkan hasil analisis aktual.</p></div>
+  <div class="next-row">
+    <button class="btn" type="button" data-go="hie">← 02 — Hierarki</button>
+    <button class="btn" type="button" data-go="overview">Kembali ke Beranda</button>
+  </div>
+</section>
+</main>
+
+<footer>
+  <span>Sumber data: BPS — Tabel Input-Output Indonesia 2020</span>
+  <span>Visualisasi Data &amp; Informasi · 3SD2</span>
+</footer>
+</div>
+<button class="back-to-top" type="button" aria-label="Kembali ke atas">↑ Kembali ke Atas</button>
+<div id="tip"></div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3-sankey@0.12.3/dist/d3-sankey.min.js"></script>
+<script>
+const OI=["#0072B2","#E69F00","#009E73","#CC79A7","#56B4E9","#D55E00","#F0E442","#999999"];
+const KEL={Primer:"#009E73",Sekunder:"#E69F00",Tersier:"#0072B2"};
+const SHORT={1:"Pertanian",2:"Pertambangan",3:"Industri Pengolahan",4:"Listrik & Gas",5:"Air & Limbah",6:"Konstruksi",7:"Perdagangan",8:"Transportasi",9:"Akomodasi & Makan",10:"Informasi & Komunikasi",11:"Keuangan",12:"Real Estate",13:"Jasa Perusahaan",14:"Adm. Pemerintahan",15:"Pendidikan",16:"Kesehatan",17:"Jasa Lainnya"};
+const rp=v=>"Rp "+(v/1e6).toLocaleString("id-ID",{maximumFractionDigits:1})+" T";
+const $=s=>document.querySelector(s), tip=d3.select("#tip");
+const showTip=(e,h)=>tip.style("display","block").html(h).style("left",Math.min(e.pageX+12,innerWidth-240)+"px").style("top",e.pageY+12+"px");
+const hideTip=()=>tip.style("display","none");
+
+Promise.all(["nodes","links_semua","hierarki","flows17"].map(f=>d3.json("data/"+f+".json")))
+ .then(([N,L,T,F])=>{
+  document.querySelectorAll(".src").forEach(e=>e.textContent="Sumber: BPS — Tabel Input-Output Indonesia Transaksi Total Atas Dasar Harga Dasar (185 Produk), 2020 (juta rupiah). Diolah penulis.");
+  document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{
+   document.querySelectorAll(".tabs button").forEach(x=>x.classList.toggle("on",x===b));
+   document.querySelectorAll("main section").forEach(s=>s.hidden=s.id!==b.dataset.t)});
+  net(N,L);hie(T);flo(F);})
+ .catch(e=>document.body.insertAdjacentHTML("afterbegin",`<p class="err">Gagal memuat data (${e}). Buka lewat server, mis. <code>python -m http.server</code>, atau lewat GitHub Pages.</p>`));
+
+window.addEventListener("scroll",()=>{
+  const btn=document.querySelector(".back-to-top");
+  btn.classList.toggle("visible", window.scrollY > 260);
+});
+document.querySelector(".back-to-top").addEventListener("click",()=>window.scrollTo({top:0,behavior:"smooth"}));
+
+/* ---------- JARINGAN ---------- */
+function net(N,L){
+ const W=900,H=600,svg=d3.select("#g").attr("viewBox",[0,0,W,H]);
+ const nb=new Map(N.map(n=>[n.id,new Set()])),ncol=d=>OI[(d.komunitas-1)%8];
+ let metric="strength_total",pin=null,links=[],rad,lines;
+ const mkR=()=>{const s=d3.scaleSqrt(d3.extent(N,d=>d[metric]),[3,22]);return d=>s(d[metric])};
+ rad=mkR();
+ const lg=svg.append("g").attr("stroke","#7a7a7a").attr("stroke-linecap","round"),ng=svg.append("g");
+ lines=lg.selectAll("line");
+ const circ=ng.selectAll("circle").data(N).join("circle").attr("r",rad).attr("fill",ncol).attr("stroke","#fff").style("cursor","pointer")
+  .on("mousemove",(e,d)=>showTip(e,`<b>${d.nama}</b><br>${d.kategori}<br>Komunitas ${d.komunitas}<br>BL ${d.BL.toFixed(2)} · FL ${d.FL.toFixed(2)}<br>Betweenness ${d.betweenness.toFixed(3)}<br>Penjualan antara ${rp(d.strength_keluar)}<br>Pembelian antara ${rp(d.strength_masuk)}`))
+  .on("mouseover",(e,d)=>focus(d.id)).on("mouseout",()=>{hideTip();focus(pin)})
+  .on("click",(e,d)=>{pin=pin===d.id?null:d.id;focus(pin)});
+ let lab=ng.append("g").style("pointer-events","none").selectAll("text");
+ const relabel=()=>{const top=[...N].sort((a,b)=>b[metric]-a[metric]).slice(0,10);
+  lab=lab.data(top,d=>d.id).join("text").attr("font-size",11).attr("text-anchor","middle").attr("paint-order","stroke").attr("stroke","#fff").attr("stroke-width",3).text(d=>d.nama.length>22?d.nama.slice(0,21)+"…":d.nama)};
+ const sim=d3.forceSimulation(N).force("link",d3.forceLink().id(d=>d.id).distance(60).strength(.04))
+  .force("charge",d3.forceManyBody().strength(-90)).force("x",d3.forceX(W/2).strength(.05)).force("y",d3.forceY(H/2).strength(.07))
+  .force("col",d3.forceCollide().radius(d=>rad(d)+1.5)).on("tick",()=>{
+   N.forEach(d=>{d.x=Math.max(25,Math.min(W-25,d.x));d.y=Math.max(25,Math.min(H-25,d.y))});
+   lines.attr("x1",d=>d.source.x).attr("y1",d=>d.source.y).attr("x2",d=>d.target.x).attr("y2",d=>d.target.y);
+   circ.attr("cx",d=>d.x).attr("cy",d=>d.y);lab.attr("x",d=>d.x).attr("y",d=>d.y-rad(d)-3)});
+ function focus(id){
+  const on=id==null?null:new Set([id,...nb.get(id)]);
+  circ.attr("opacity",d=>!on||on.has(d.id)?1:.12).attr("stroke",d=>d.id===id?"#000":"#fff").attr("stroke-width",d=>d.id===id?2.5:1);
+  lines.attr("stroke-opacity",d=>!on?.35:(d.source.id===id||d.target.id===id)?.9:.04)}
+ function update(p){
+  links=L.filter(l=>l.persentil>=p).map(l=>({...l}));
+  nb.forEach(s=>s.clear());links.forEach(l=>{nb.get(l.source).add(l.target);nb.get(l.target).add(l.source)});
+  const w=d3.scaleLog(d3.extent(links,d=>d.value),[.4,3.2]);
+  lines=lg.selectAll("line").data(links).join("line").attr("stroke-width",d=>w(d.value));
+  sim.force("link").links(links);sim.alpha(.8).restart();
+  $("#ne").textContent=links.length.toLocaleString("id-ID");focus(pin)}
+ $("#pct").oninput=e=>$("#pv").textContent=e.target.value;
+ $("#pct").onchange=e=>update(+e.target.value);
+ $("#metric").onchange=e=>{metric=e.target.value;rad=mkR();circ.attr("r",rad);sim.force("col").radius(d=>rad(d)+1.5);relabel();sim.alpha(.5).restart()};
+ relabel();update(95);
+ const cnt=d3.rollup(N,v=>v.length,d=>d.komunitas);
+ $("#lgn").innerHTML=[...cnt.keys()].sort(d3.ascending).map(k=>`<span><i style="background:${OI[(k-1)%8]}"></i>Komunitas ${k} (${cnt.get(k)})</span>`).join("")+"<span>Warna = komunitas (Louvain)</span>";
+ const M=$("#mx"),cx=M.getContext("2d"),s=3,off=8,n=N.length,pos=new Map(N.map(d=>[d.id,d.urut_matriks])),ord=[...N].sort((a,b)=>a.urut_matriks-b.urut_matriks);
+ const look=new Map(L.map(l=>[l.source+"-"+l.target,l.value])),lo=Math.log(d3.min(L,d=>d.value)),hi=Math.log(d3.max(L,d=>d.value)),cs=d3.scaleSequential(d3.interpolateViridis);
+ M.width=M.height=off+n*s;cx.fillStyle="#fff";cx.fillRect(0,0,M.width,M.height);
+ ord.forEach((d,i)=>{cx.fillStyle=ncol(d);cx.fillRect(0,off+i*s,5,s);cx.fillRect(off+i*s,0,s,5)});
+ L.forEach(l=>{cx.fillStyle=cs((Math.log(l.value)-lo)/(hi-lo));cx.fillRect(off+pos.get(l.target)*s,off+pos.get(l.source)*s,s,s)});
+ M.onmousemove=e=>{const b=M.getBoundingClientRect(),k=M.width/b.width,j=Math.floor(((e.clientX-b.left)*k-off)/s),i=Math.floor(((e.clientY-b.top)*k-off)/s);
+  if(i<0||j<0||i>=n||j>=n)return hideTip();const a=ord[i],c=ord[j],v=look.get(a.id+"-"+c.id);
+  showTip(e,`<b>${a.nama}</b> → <b>${c.nama}</b><br>${v?rp(v):"tidak ada transaksi"}`)};
+ M.onmouseleave=hideTip;
+}
+
+/* ---------- HIERARKI ---------- */
+function hie(T){
+ const root=d3.hierarchy(T).sum(d=>d.value||0);
+ root.each(n=>{n.data._o=n;const lv=n.leaves(),w=d3.sum(lv,l=>l.value);
+  n.data._bl=d3.sum(lv,l=>l.data.BL*l.value)/w;n.data._fl=d3.sum(lv,l=>l.data.FL*l.value)/w});
+ const bls=root.leaves().map(l=>l.data.BL).sort(d3.ascending),q=d3.quantile(bls,.05),h=d3.quantile(bls,.95);
+ const col=d3.scaleSequential(d3.interpolateYlGnBu).domain([q,h]).clamp(true);
+ $("#gr").style.background=`linear-gradient(90deg,${d3.range(0,1.01,.25).map(t=>d3.interpolateYlGnBu(t)).join(",")})`;
+ $("#gv").textContent=`(${q.toFixed(2)} – ${h.toFixed(2)}; 1 = rata-rata)`;
+ const TW=600,TH=420,R=210,tm=d3.select("#tm").attr("viewBox",[0,0,TW,TH]),sb=d3.select("#sb").attr("viewBox",[-R-10,-R-10,2*R+20,2*R+20]);
+ const th=n=>`<b>${n.data.name}</b><br>Output ${rp(n.value)}<br>BL ${n.data._bl.toFixed(2)} · FL ${n.data._fl.toFixed(2)}${n.children?"<br><i>klik untuk menelusuri</i>":""}`;
+ const ink=c=>d3.hsl(c).l>.55?"#111":"#fff";
+ let cur=root;const go=n=>{if(n&&n.children){cur=n;render()}};
+ function render(){
+  d3.select("#bc").html("").selectAll("button").data(cur.ancestors().reverse()).join("button").text(d=>d.data.name).on("click",(e,d)=>go(d));
+  const t=d3.treemap().size([TW,TH]).paddingInner(2).round(true)(d3.hierarchy({children:cur.children.map(c=>({n:c,v:c.value}))}).sum(d=>d.v||0).sort((a,b)=>b.value-a.value));
+  tm.selectAll("g").remove();
+  const g=tm.selectAll("g").data(t.leaves()).enter().append("g").attr("transform",d=>`translate(${d.x0},${d.y0})`);
+  g.append("rect").attr("width",d=>d.x1-d.x0).attr("height",d=>d.y1-d.y0).attr("fill",d=>col(d.data.n.data._bl))
+   .style("cursor",d=>d.data.n.children?"pointer":"default").on("click",(e,d)=>go(d.data.n)).on("mousemove",(e,d)=>showTip(e,th(d.data.n))).on("mouseout",hideTip);
+  g.append("text").attr("x",4).attr("y",14).attr("font-size",11).style("pointer-events","none").attr("fill",d=>ink(col(d.data.n.data._bl)))
+   .text(d=>{const w=d.x1-d.x0,nm=d.data.n.data.name;return w>55&&d.y1-d.y0>18?(nm.length>w/6?nm.slice(0,Math.floor(w/6))+"…":nm):""});
+  const rt=d3.partition().size([2*Math.PI,cur.height+1])(cur.copy().sum(d=>d.value||0)),ring=R/(cur.height+1);
+  const arc=d3.arc().startAngle(d=>d.x0).endAngle(d=>d.x1).padAngle(.004).innerRadius(d=>d.y0*ring).outerRadius(d=>d.y1*ring-1);
+  sb.selectAll("*").remove();
+  sb.selectAll("path").data(rt.descendants().filter(d=>d.depth>0)).enter().append("path").attr("d",arc).attr("fill",d=>col(d.data._bl)).attr("stroke","#fff").attr("stroke-width",.5)
+   .style("cursor",d=>d.data._o.children?"pointer":"default").on("click",(e,d)=>go(d.data._o)).on("mousemove",(e,d)=>showTip(e,th(d.data._o))).on("mouseout",hideTip);
+  sb.append("circle").attr("r",ring-3).attr("fill","#f1f3f5").style("cursor",cur.parent?"pointer":"default").on("click",()=>go(cur.parent));
+  sb.append("text").attr("text-anchor","middle").attr("font-size",12).style("pointer-events","none").selectAll("tspan").data(cur.data.name.split(/ (?=[^ ]+$)/).concat(cur.parent?["(klik: naik)"]:[])).enter().append("tspan").attr("x",0).attr("dy",(d,i)=>i?"1.2em":"-.3em").text(d=>d.length>18?d.slice(0,17)+"…":d)}
+ render();
+}
+
+/* ---------- ALIRAN ---------- */
+function flo(F){
+ const nm=F.nodes,K=new Map(nm.map(n=>[n.id,n])),sa=d3.select("#fa"),st=d3.select("#ft");
+ [sa,st].forEach(s=>{s.append("option").attr("value",0).text("Semua");nm.forEach(n=>s.append("option").attr("value",n.id).text(SHORT[n.id]))});
+ const SW=900,SH=520,ss=d3.select("#sk").attr("viewBox",[0,0,SW,SH]),CS=540,ro=165,ri=ro-14,cr=d3.select("#ch").attr("viewBox",[-CS/2,-CS/2,CS,CS]);
+ const nmv=id=>SHORT[id];
+ function sankey(L){
+  ss.selectAll("*").remove();
+  if(!L.length)return ss.append("text").attr("x",SW/2).attr("y",SH/2).attr("text-anchor","middle").text("Tidak ada aliran untuk filter ini");
+  const keys=[...new Set(L.map(l=>"a"+l.source).concat(L.map(l=>"t"+l.target)))];
+  const {nodes,links}=d3.sankey().nodeId(d=>d.key).nodeWidth(12).nodePadding(8).extent([[150,6],[SW-150,SH-6]])
+   ({nodes:keys.map(k=>({key:k,id:+k.slice(1),side:k[0]})),links:L.map(l=>({source:"a"+l.source,target:"t"+l.target,value:l.value}))});
+  ss.append("g").attr("fill","none").selectAll("path").data(links).join("path").attr("d",d3.sankeyLinkHorizontal())
+   .attr("stroke",d=>KEL[K.get(d.source.id).kelompok]).attr("stroke-width",d=>Math.max(1,d.width)).attr("stroke-opacity",.45)
+   .on("mousemove",(e,d)=>showTip(e,`<b>${nmv(d.source.id)} → ${nmv(d.target.id)}</b><br>${rp(d.value)}`)).on("mouseout",hideTip);
+  const g=ss.append("g").selectAll("g").data(nodes).join("g");
+  g.append("rect").attr("x",d=>d.x0).attr("y",d=>d.y0).attr("width",d=>d.x1-d.x0).attr("height",d=>Math.max(1,d.y1-d.y0)).attr("fill",d=>KEL[K.get(d.id).kelompok])
+   .on("mousemove",(e,d)=>showTip(e,`<b>${nmv(d.id)}</b><br>${d.side==="a"?"Dijual ke kategori lain":"Dibeli dari kategori lain"}: ${rp(d.value)}`)).on("mouseout",hideTip);
+  g.append("text").attr("x",d=>d.side==="a"?d.x0-6:d.x1+6).attr("y",d=>(d.y0+d.y1)/2).attr("dy",".35em").attr("font-size",11)
+   .attr("text-anchor",d=>d.side==="a"?"end":"start").text(d=>nmv(d.id))}
+ function chord(L){
+  cr.selectAll("*").remove();
+  const ids=nm.map(n=>n.id),ix=new Map(ids.map((id,i)=>[id,i])),m=ids.map(()=>ids.map(()=>0));
+  L.forEach(l=>m[ix.get(l.source)][ix.get(l.target)]=l.value);
+  const ch=d3.chordDirected().padAngle(.03).sortSubgroups(d3.descending)(m),mid=g=>(g.startAngle+g.endAngle)/2;
+  cr.append("g").attr("fill-opacity",.55).selectAll("path").data(ch).join("path").attr("d",d3.ribbon().radius(ri)).attr("fill",d=>KEL[nm[d.source.index].kelompok])
+   .on("mousemove",(e,d)=>showTip(e,`<b>${nmv(ids[d.source.index])} → ${nmv(ids[d.target.index])}</b><br>${rp(d.source.value)}`)).on("mouseout",hideTip);
+  const gs=cr.append("g").selectAll("g").data(ch.groups.filter(g=>g.value>0)).join("g");
+  gs.append("path").attr("d",d3.arc().innerRadius(ri).outerRadius(ro)).attr("fill",d=>KEL[nm[d.index].kelompok]);
+  gs.append("text").attr("font-size",10.5).attr("dy",".35em").attr("transform",d=>`rotate(${mid(d)*180/Math.PI-90}) translate(${ro+6}) ${mid(d)>Math.PI?"rotate(180)":""}`)
+   .attr("text-anchor",d=>mid(d)>Math.PI?"end":"start").text(d=>nmv(ids[d.index]))}
+ function draw(){
+  const a=+sa.property("value"),t=+st.property("value"),n=+$("#fn").value;$("#fnv").textContent=n;
+  const L=F.links.filter(l=>(!a||l.source===a)&&(!t||l.target===t)).sort((x,y)=>y.value-x.value).slice(0,n);
+  sankey(L);chord(L)}
+ sa.on("change",draw);st.on("change",draw);$("#fn").oninput=draw;draw();
+}
+</script>
+<script>
+/* Navigasi antar-page (ADDITIVE): berdiri sendiri, tidak menyentuh kode analisis/D3 di atas. */
+(function(){
+  var pages=["overview","net","hie","flo"],
+      titles={overview:"Beranda",net:"01 — Jaringan",hie:"02 — Hierarki",flo:"03 — Aliran"},
+      base="Siapa Menggerakkan Siapa? Keterkaitan Antarsektor Ekonomi Indonesia",
+      tabs=Array.prototype.slice.call(document.querySelectorAll(".tabs button"));
+  function show(id,fromHash){
+    if(pages.indexOf(id)<0)id="overview";
+    tabs.forEach(function(b){var on=b.dataset.t===id;b.classList.toggle("on",on);
+      if(on)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current");
+      if(on&&b.scrollIntoView)b.scrollIntoView({block:"nearest",inline:"center"});});
+    document.querySelectorAll("main section").forEach(function(s){s.hidden=s.id!==id;});
+    document.title=titles[id]+" · "+base;
+    if(!fromHash){try{history.replaceState(null,"","#"+id);}catch(e){}window.scrollTo({top:0,behavior:"smooth"});}
+  }
+  tabs.forEach(function(b){b.addEventListener("click",function(){show(b.dataset.t);});});
+  document.querySelectorAll("[data-go]").forEach(function(b){b.addEventListener("click",function(){show(b.dataset.go);});});
+  window.addEventListener("hashchange",function(){show(location.hash.slice(1),true);});
+  show(location.hash.slice(1)||"overview",true);
+})();
+</script>
+</body>
+</html>
